@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>رغباتي التعليمية - تحميل الملف</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8fafc;
+            color: #0b1a33;
+            min-height: 100vh;
+            padding: 0 1rem 2rem;
+        }
+
+        .app-header {
+            max-width: 900px;
+            margin: 1.5rem auto 0;
+            background: linear-gradient(145deg, #1e3a8a, #1e40af);
+            color: #fff;
+            padding: 2rem 1.5rem;
+            border-radius: 28px;
+            box-shadow: 0 20px 40px -12px rgba(30, 58, 138, 0.4);
+            text-align: center;
+        }
+
+        .app-header h1 {
+            font-size: 2.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .app-header p {
+            opacity: 0.85;
+            margin-top: 0.3rem;
+        }
+
+        .container {
+            max-width: 820px;
+            margin: 1.8rem auto 0;
+        }
+
+        /* File Upload Section */
+        .upload-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            border: 2px dashed #dbeafe;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            transition: 0.3s;
+        }
+
+        .upload-section:hover {
+            border-color: #2563eb;
+            background: #f8faff;
+        }
+
+        .upload-section .icon {
+            font-size: 3rem;
+            color: #2563eb;
+            margin-bottom: 0.5rem;
+        }
+
+        .upload-section input[type="file"] {
+            display: none;
+        }
+
+        .upload-section .file-label {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+            margin-top: 0.5rem;
+        }
+
+        .upload-section .file-label:hover {
+            background: #1d4ed8;
+            transform: scale(1.02);
+        }
+
+        .upload-section .file-info {
+            margin-top: 1rem;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .upload-section .file-info i {
+            color: #22c55e;
+        }
+
+        .upload-section .example {
+            margin-top: 0.8rem;
+            background: #f1f5f9;
+            padding: 0.8rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            color: #475569;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .search-box {
+            position: sticky;
+            top: 1rem;
+            z-index: 10;
+            background: #ffffffdd;
+            backdrop-filter: blur(12px);
+            padding: 1.2rem 1.5rem;
+            border-radius: 60px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+            border: 1px solid #ffffff70;
+        }
+
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .search-wrapper i {
+            color: #94a3b8;
+            font-size: 1.2rem;
+        }
+
+        .search-wrapper input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-size: 1.1rem;
+            padding: 0.6rem 0.2rem;
+            outline: none;
+            color: #0b1a33;
+            font-weight: 500;
+        }
+
+        .search-wrapper input:disabled {
+            opacity: 0.5;
+        }
+
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1.2rem 0.5rem 0.8rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .info-bar .count {
+            background: #e2e8f0;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .info-bar .actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .info-bar .actions button {
+            background: transparent;
+            border: none;
+            color: #64748b;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            transition: 0.2s;
+        }
+
+        .info-bar .actions button:hover {
+            background: #f1f5f9;
+        }
+
+        .results-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+            margin-top: 0.5rem;
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 0.9rem 1.5rem;
+            border-radius: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            border: 1px solid #f1f5f9;
+            transition: all 0.2s ease;
+            animation: fadeUp 0.25s ease both;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: #dbeafe;
+            box-shadow: 0 12px 28px -8px rgba(30, 58, 138, 0.08);
+        }
+
+        .card .name {
+            font-size: 1rem;
+            line-height: 1.6;
+            display: flex;
+            align-items: baseline;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+
+        .card .name .index {
+            display: inline-block;
+            min-width: 1.8rem;
+            font-weight: 600;
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+
+        .card .name mark {
+            background: #fef08a;
+            padding: 0.1rem 0.3rem;
+            border-radius: 6px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .card .actions {
+            display: flex;
+            gap: 0.4rem;
+            flex-shrink: 0;
+        }
+
+        .card .actions button {
+            border: none;
+            background: #f1f5f9;
+            color: #1e293b;
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: 0.2s;
+        }
+
+        .card .actions .copy-btn {
+            background: #2563eb;
+            color: #fff;
+        }
+
+        .card .actions .copy-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #94a3b8;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 0.8rem;
+            opacity: 0.5;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #0b1a33;
+            color: #fff;
+            padding: 0.8rem 2rem;
+            border-radius: 60px;
+            font-size: 0.95rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .app-header h1 {
+                font-size: 1.6rem;
+            }
+
+            .search-box {
+                padding: 0.9rem 1.2rem;
+                border-radius: 40px;
+            }
+
+            .card {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.7rem;
+                padding: 1rem 1.2rem;
+            }
+
+            .card .actions {
+                justify-content: flex-start;
+            }
+
+            .card .actions button {
+                flex: 1;
+                justify-content: center;
+            }
+
+            .upload-section {
+                padding: 1.5rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="app-header">
+        <h1><i class="fas fa-graduation-cap"></i> رغباتي التعليمية</h1>
+        <p>حمّل ملف الرغبات وابحث بسرعة</p>
+    </header>
+
+    <div class="container">
+        <!-- Upload Section -->
+        <div class="upload-section" id="uploadSection">
+            <div class="icon"><i class="fas fa-file-upload"></i></div>
+            <h3>حمّل ملف الرغبات</h3>
+            <p style="color:#64748b; margin: 0.5rem 0;">قم برفع ملف نصي يحتوي على الرغبات (كل رغبة في سطر)</p>
+            <input type="file" id="fileInput" accept=".txt" />
+            <label for="fileInput" class="file-label">
+                <i class="fas fa-folder-open"></i> اختر ملف نصي
+            </label>
+            <div class="file-info" id="fileInfo">
+                <i class="fas fa-info-circle"></i> لم يتم تحميل أي ملف بعد
+            </div>
+            <div class="example">
+                <strong>مثال:</strong> تجارة عين شمس<br />
+                تربية السويس<br />
+                طب جامعة العاصمة
+            </div>
+        </div>
+
+        <!-- Search -->
+        <div class="search-box">
+            <div class="search-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="ابحث عن كلية أو معهد..." disabled />
+            </div>
+        </div>
+
+        <div class="info-bar">
+            <span class="count" id="resultCount">0 نتيجة</span>
+            <div class="actions">
+                <button id="clearSearchBtn"><i class="fas fa-times-circle"></i> مسح</button>
+                <button id="resetDataBtn"><i class="fas fa-redo"></i> إعادة تحميل</button>
+            </div>
+        </div>
+
+        <div class="results-list" id="resultsContainer"></div>
+    </div>
+
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle" style="color:#4ade80;"></i>
+        <span id="toastMessage">تم النسخ</span>
+    </div>
+
+    <script>
+        // ===== STATE =====
+        let wishes = [];
+        let currentFilter = '';
+
+        // ===== DOM REFS =====
+        const fileInput = document.getElementById('fileInput');
+        const fileInfo = document.getElementById('fileInfo');
+        const searchInput = document.getElementById('searchInput');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const resultCount = document.getElementById('resultCount');
+        const clearSearchBtn = document.getElementById('clearSearchBtn');
+        const resetDataBtn = document.getElementById('resetDataBtn');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toastMessage');
+
+        // ===== TOAST =====
+        let toastTimer = null;
+
+        function showToast(msg, icon = '✅') {
+            toastMessage.textContent = msg;
+            toast.querySelector('i').className = 'fas fa-check-circle';
+            toast.querySelector('i').style.color = '#4ade80';
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+
+        // ===== HIGHLIGHT =====
+        function highlightText(text, term) {
+            if (!term || !text) return text;
+            const regex = new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+            return text.replace(regex, (match) => `<mark>${match}</mark>`);
+        }
+
+        // ===== RENDER =====
+        function render(filter = '') {
+            if (wishes.length === 0) {
+                resultsContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-file-upload"></i>
+                        <p>يرجى تحميل ملف الرغبات أولاً</p>
+                    </div>
+                `;
+                resultCount.textContent = '0 نتيجة';
+                return;
+            }
+
+            const term = filter.trim();
+            const filtered = term ? wishes.filter(item => item.includes(term)) : [...wishes];
+
+            resultsContainer.innerHTML = '';
+
+            if (filtered.length === 0) {
+                resultsContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-search"></i>
+                        <p>لا توجد نتائج مطابقة لبحثك</p>
+                    </div>
+                `;
+                resultCount.textContent = '0 نتيجة';
+                return;
+            }
+
+            resultCount.textContent = `${filtered.length} نتيجة من ${wishes.length}`;
+
+            filtered.forEach((item, idx) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.style.animationDelay = `${idx * 0.03}s`;
+
+                card.innerHTML = `
+                    <div class="name">
+                        <span class="index">${idx + 1}</span>
+                        ${highlightText(item, term)}
+                    </div>
+                    <div class="actions">
+                        <button class="copy-btn" data-item="${item.replace(/"/g, '&quot;')}">
+                            <i class="fas fa-copy"></i> نسخ
+                        </button>
+                    </div>
+                `;
+
+                card.querySelector('.copy-btn').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const val = e.currentTarget.dataset.item;
+                    navigator.clipboard.writeText(val).then(() => {
+                        showToast(`تم نسخ: "${val}"`);
+                    }).catch(() => {
+                        const textArea = document.createElement('textarea');
+                        textArea.value = val;
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(textArea);
+                        showToast(`تم نسخ: "${val}"`);
+                    });
+                });
+
+                resultsContainer.appendChild(card);
+            });
+        }
+
+        // ===== LOAD FILE =====
+        function loadFile(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const content = e.target.result;
+                // Split by new line and filter empty lines
+                wishes = content.split('\n')
+                    .map(line => line.trim())
+                    .filter(line => line.length > 0);
+
+                if (wishes.length === 0) {
+                    showToast('⚠️ الملف فارغ أو غير صحيح');
+                    return;
+                }
+
+                // Save to localStorage
+                localStorage.setItem('wishesData', JSON.stringify(wishes));
+                localStorage.setItem('wishesFileName', file.name);
+
+                fileInfo.innerHTML = `<i class="fas fa-check-circle" style="color:#22c55e;"></i> تم تحميل: ${file.name} (${wishes.length} رغبة)`;
+                searchInput.disabled = false;
+                searchInput.focus();
+
+                showToast(`✅ تم تحميل ${wishes.length} رغبة بنجاح`);
+                render(currentFilter);
+            };
+
+            reader.onerror = () => {
+                showToast('❌ حدث خطأ في قراءة الملف');
+            };
+
+            reader.readAsText(file, 'UTF-8');
+        }
+
+        // ===== FILE INPUT HANDLER =====
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            if (!file.name.endsWith('.txt')) {
+                showToast('⚠️ الرجاء اختيار ملف نصي (.txt)');
+                fileInput.value = '';
+                return;
+            }
+
+            loadFile(file);
+        });
+
+        // ===== RESTORE FROM LOCALSTORAGE =====
+        function restoreFromStorage() {
+            const saved = localStorage.getItem('wishesData');
+            const fileName = localStorage.getItem('wishesFileName');
+
+            if (saved) {
+                try {
+                    wishes = JSON.parse(saved);
+                    if (wishes.length > 0) {
+                        fileInfo.innerHTML = `<i class="fas fa-check-circle" style="color:#22c55e;"></i> تم استعادة: ${fileName || 'ملف محفوظ'} (${wishes.length} رغبة)`;
+                        searchInput.disabled = false;
+                        render(currentFilter);
+                        return true;
+                    }
+                } catch (e) {
+                    console.error('Error parsing saved data');
+                }
+            }
+            return false;
+        }
+
+        // ===== RESET DATA =====
+        function resetData() {
+            localStorage.removeItem('wishesData');
+            localStorage.removeItem('wishesFileName');
+            wishes = [];
+            fileInfo.innerHTML = `<i class="fas fa-info-circle"></i> لم يتم تحميل أي ملف بعد`;
+            searchInput.disabled = true;
+            searchInput.value = '';
+            currentFilter = '';
+            render('');
+            fileInput.value = '';
+            showToast('🔄 تم إعادة تعيين البيانات');
+        }
+
+        // ===== SEARCH =====
+        searchInput.addEventListener('input', () => {
+            currentFilter = searchInput.value;
+            render(currentFilter);
+        });
+
+        // ===== CLEAR SEARCH =====
+        clearSearchBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            currentFilter = '';
+            render('');
+            searchInput.focus();
+            showToast('تم مسح البحث');
+        });
+
+        // ===== RESET BUTTON =====
+        resetDataBtn.addEventListener('click', resetData);
+
+        // ===== KEYBOARD SHORTCUTS =====
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                clearSearchBtn.click();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                if (!searchInput.disabled) {
+                    searchInput.focus();
+                    searchInput.select();
+                }
+            }
+        });
+
+        // ===== INIT =====
+        // Try to restore from localStorage first
+        const hasSaved = restoreFromStorage();
+
+        if (!hasSaved) {
+            // Check if there's a default file to load (optional)
+            // You can set a default file URL here if needed
+        }
+
+        // ===== DRAG AND DROP SUPPORT =====
+        const uploadSection = document.getElementById('uploadSection');
+
+        uploadSection.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadSection.style.borderColor = '#2563eb';
+            uploadSection.style.background = '#f0f7ff';
+        });
+
+        uploadSection.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            uploadSection.style.borderColor = '#dbeafe';
+            uploadSection.style.background = 'white';
+        });
+
+        uploadSection.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadSection.style.borderColor = '#dbeafe';
+            uploadSection.style.background = 'white';
+
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                const file = files[0];
+                if (file.name.endsWith('.txt')) {
+                    loadFile(file);
+                } else {
+                    showToast('⚠️ الرجاء إسقاط ملف نصي (.txt)');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
